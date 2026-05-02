@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
                 this.loading = false;
             },
             error: (err) => {
-                this.error = 'Failed to load dashboard data. Ensure the API key is valid.';
+                this.error = 'Oops! Something went wrong while loading the videos.';
                 console.error(err);
                 this.loading = false;
             }
