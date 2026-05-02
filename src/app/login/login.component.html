@@ -1,0 +1,84 @@
+<main class="login-shell">
+  <!-- Background animated blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <section class="login-card">
+    <div class="card-content">
+      <header>
+        <div class="logo">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#paint0_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="url(#paint1_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="url(#paint2_linear)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="paint0_linear" x1="2" y1="7" x2="22" y2="7" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="1" stop-color="#c084fc"/>
+              </linearGradient>
+              <linearGradient id="paint1_linear" x1="2" y1="19.5" x2="22" y2="19.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="1" stop-color="#c084fc"/>
+              </linearGradient>
+              <linearGradient id="paint2_linear" x1="2" y1="14.5" x2="22" y2="14.5" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818cf8"/>
+                <stop offset="1" stop-color="#c084fc"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1>Welcome Back</h1>
+        <p>Sign in to continue your journey with CodingAtti.</p>
+      </header>
+
+      <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+        <div class="input-group">
+          <input
+            id="email"
+            name="email"
+            type="email"
+            [(ngModel)]="user.email"
+            required
+            placeholder=" "
+          />
+          <label for="email">Email address</label>
+        </div>
+
+        <div class="input-group">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            [(ngModel)]="user.password"
+            required
+            placeholder=" "
+          />
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" name="remember" />
+            <span class="checkmark"></span>
+            Remember me
+          </label>
+          <a href="#" class="forgot-password">Forgot password?</a>
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid || isSubmitting" class="submit-btn">
+          <span class="btn-text" *ngIf="!isSubmitting">Sign In</span>
+          <span class="btn-spinner" *ngIf="isSubmitting"></span>
+        </button>
+
+        <p class="status" *ngIf="statusMessage">{{ statusMessage }}</p>
+      </form>
+      
+      <div class="divider">
+        <span>or</span>
+      </div>
+      
+      <p class="signup-link">Don't have an account? <a href="#">Create one</a></p>
+    </div>
+  </section>
+</main>

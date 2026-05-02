@@ -1,0 +1,133 @@
+<div class="home-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <h1 class="hero-title">Coding Atti</h1>
+    <p class="hero-subtitle">
+      Welcome to my digital playground. Exploring code, building software, and sharing the journey.
+    </p>
+    <a href="https://www.youtube.com/channel/UC4HJuFpR-5ScdQTqhoiHgyg?sub_confirmation=1" target="_blank" class="cta-button">
+      Subscribe on YouTube
+    </a>
+  </section>
+
+  <!-- Loading / Error -->
+  <div *ngIf="loading" class="loading">
+    Loading...
+  </div>
+  <div *ngIf="error" class="loading" style="color: #ff4757;">
+    {{ error }}
+  </div>
+
+  <div class="content-sections" *ngIf="!loading && !error">
+    
+    <!-- Tabs Header -->
+    <div class="tabs-header">
+      <button class="tab-btn" [class.active]="activeTab === 'latest'" (click)="activeTab = 'latest'">
+        Latest Uploads
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'trending'" (click)="activeTab = 'trending'">
+        Trending Now
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'playlists'" (click)="activeTab = 'playlists'">
+        Playlists
+      </button>
+    </div>
+
+    <!-- Latest Uploads Grid -->
+    <div class="tab-content" *ngIf="activeTab === 'latest'">
+      <div class="video-grid">
+        <div class="video-card" *ngFor="let video of latestVideos">
+          <div class="video-wrapper">
+            <iframe 
+              [src]="getSafeUrl(video.id)" 
+              title="YouTube video player" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title" [title]="video.title">{{ video.title }}</h3>
+            <div class="video-meta">
+              <p class="video-date">{{ formatDate(video.publishedAt) }}</p>
+              <button class="custom-share-btn" (click)="copyLink(video.id)" title="Copy Link">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trending Grid -->
+    <div class="tab-content" *ngIf="activeTab === 'trending'">
+      <div class="video-grid">
+        <div class="video-card" *ngFor="let video of trendingVideos">
+          <div class="video-wrapper">
+            <iframe 
+              [src]="getSafeUrl(video.id)" 
+              title="YouTube video player" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="video-info">
+            <h3 class="video-title" [title]="video.title">{{ video.title }}</h3>
+            <div class="video-meta">
+              <p class="video-date">{{ formatDate(video.publishedAt) }}</p>
+              <button class="custom-share-btn" (click)="copyLink(video.id)" title="Copy Link">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playlists Grid -->
+    <div class="tab-content" *ngIf="activeTab === 'playlists'">
+      <div class="video-grid">
+        <a class="playlist-card" *ngFor="let playlist of playlists" 
+           href="https://www.youtube.com/playlist?list={{playlist.id}}" target="_blank">
+          <div class="playlist-thumbnail">
+            <img [src]="playlist.thumbnail" [alt]="playlist.title">
+            <div class="playlist-overlay">
+              <span class="item-count">{{playlist.itemCount}} Videos</span>
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="playlist-info">
+            <h3 class="playlist-title" [title]="playlist.title">{{ playlist.title }}</h3>
+            <div class="video-meta" style="margin-top: 1rem;">
+              <button class="custom-share-btn" (click)="copyPlaylistLink(playlist.id, $event)" title="Copy Link" style="margin-left: auto;">
+                <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                Copy Link
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container" [class.show]="toastMessage">
+    {{ toastMessage }}
+  </div>
+
+</div>
