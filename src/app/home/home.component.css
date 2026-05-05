@@ -349,6 +349,17 @@
   .video-grid {
     grid-template-columns: 1fr;
   }
+  
+  /* Mobile Performance Optimizations */
+  .home-container::after {
+    animation: none; /* Stop expensive background repaints */
+    filter: blur(40px); /* Reduce blur cost */
+  }
+  
+  .video-card {
+    backdrop-filter: none; /* Disable expensive glassmorphism on mobile */
+    background: rgba(30, 41, 59, 0.85); /* Solid fallback color */
+  }
 }
 
 /* Custom Share Button & Meta */
