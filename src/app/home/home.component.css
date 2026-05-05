@@ -17,18 +17,10 @@
     radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.45) 0%, transparent 60%),
     radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.45) 0%, transparent 60%),
     radial-gradient(circle at 50% 80%, rgba(56, 189, 248, 0.45) 0%, transparent 60%);
-  background-size: 200% 200%;
-  animation: orb-drift 15s ease-in-out infinite alternate;
   z-index: 0;
   pointer-events: none;
-  filter: blur(80px);
+  filter: blur(40px); /* Reduced blur cost, static background */
   opacity: 0.8;
-}
-
-@keyframes orb-drift {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 100%; }
-  100% { background-position: 0% 100%; }
 }
 
 /* Hero Section */
@@ -154,11 +146,9 @@
   gap: 2.5rem;
 }
 
-/* Video Cards (Glassmorphism) */
+/* Video Cards (Performance Optimized) */
 .video-card {
-  background: rgba(30, 41, 59, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(30, 41, 59, 0.85); /* Solid fallback color to prevent lag */
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   overflow: hidden;
@@ -348,17 +338,6 @@
   }
   .video-grid {
     grid-template-columns: 1fr;
-  }
-  
-  /* Mobile Performance Optimizations */
-  .home-container::after {
-    animation: none; /* Stop expensive background repaints */
-    filter: blur(40px); /* Reduce blur cost */
-  }
-  
-  .video-card {
-    backdrop-filter: none; /* Disable expensive glassmorphism on mobile */
-    background: rgba(30, 41, 59, 0.85); /* Solid fallback color */
   }
 }
 
